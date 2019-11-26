@@ -1,19 +1,21 @@
 package com.juankevintrujillo.model;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
  * @author juankevintr
  */
-public class DBConnection {
+public class DBConfiguration {
 
     private String dbName;
-    private Connection conn;
+    public Connection conn;
 
-    public DBConnection(String db) {
+    public DBConfiguration(String db) {
 	dbName = db;
     }
 
@@ -24,6 +26,11 @@ public class DBConnection {
 		    + System.getenv().get("HOME")
 		    + "/Documents/src/java-projects/Kata5/src/resources/"
 		    + dbName + ".db";
+
+	    // Checking if a file/database doesn't exist
+	    if (!new File(url).isFile()) {
+		System.out.println("\nThe new database '" + dbName + "' has been created!");
+	    }
 
 	    // Creating the connetion to the DataBase
 	    conn = DriverManager.getConnection(url);
@@ -45,5 +52,4 @@ public class DBConnection {
 	    System.out.println(ex.getMessage());
 	}
     }
-
 }
